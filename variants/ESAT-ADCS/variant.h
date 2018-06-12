@@ -26,8 +26,8 @@
  * WITH THE SOFTWARE.
  */
 
-#ifndef _VARIANT_DRAGONFLY_STM32L476RE_
-#define _VARIANT_DRAGONFLY_STM32L476RE_
+#ifndef _VARIANT_ESAT_ADCS_
+#define _VARIANT_ESAT_ADCS_
 
 // The definitions here needs a STM32L4 core >=1.6.6
 #define ARDUINO_STM32L4_VARIANT_COMPLIANCE 10606
@@ -71,6 +71,21 @@ extern "C"
 #define NUM_ANALOG_INPUTS    (6u)
 #define NUM_ANALOG_OUTPUTS   (2u)
 #define analogInputToDigitalPin(p)  ((p < 6u) ? (p) + 14u : -1)
+
+/* Coarse sun sensors */
+static const uint8_t CSSXMINUS = 16; /* Coarse sun sensor on X- panel */
+static const uint8_t CSSXPLUS = 17;  /* Coarse sun sensor on X+ panel */
+static const uint8_t CSSYMINUS = 14; /* Coarse sun sensor on Y- panel */
+static const uint8_t CSSYPLUS = 15;  /* Coarse sun sensor on Y+ panel */
+
+/* Magnetorquer pins */
+static const uint8_t MTQXMINUS = 24; /* Magnetorquer driver (X axis, negative) */
+static const uint8_t MTQXPLUS = 22;  /* Magnetorquer driver (X axis, positive) */
+static const uint8_t MTQYMINUS = 42; /* Magnetorquer driver (Y axis, negative) */
+static const uint8_t MTQYPLUS = 43;  /* Magnetorquer driver (Y axis, positive) */
+
+/* Motor control pins */
+static const uint8_t EN5V = 8; /* Motor control 5 V line. */
 
 // LEDs
 #define PIN_LED_13           (13u)
@@ -238,5 +253,5 @@ extern Uart Serial5;
 // Alias SerialUSB to Serial
 #define SerialUSB SERIAL_PORT_USBVIRTUAL
 
-#endif /* _VARIANT_DRAGONFLY_STM32L476RE_ */
+#endif /* _VARIANT_ESAT_ADCS_ */
 
