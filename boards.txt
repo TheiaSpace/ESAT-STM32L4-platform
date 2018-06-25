@@ -34,61 +34,12 @@ ESAT-ADCS.build.variant=ESAT-ADCS
 ESAT-ADCS.build.variant_system_libs="-L{runtime.platform.path}/system/STM32L4xx/Lib" "-L{runtime.platform.path}/system/CMSIS/Lib" -lstm32l476 -larm_cortexM4lf_math
 ESAT-ADCS.build.variant_system_include="-I{runtime.platform.path}/system/CMSIS/Include" "-I{runtime.platform.path}/system/CMSIS/Device/ST/STM32L4xx/Include" "-I{runtime.platform.path}/system/STM32L4xx/Include" 
 
-ESAT-ADCS.menu.usb.cdc=Serial
-ESAT-ADCS.menu.usb.cdc.build.usb_type=USB_TYPE_CDC
-ESAT-ADCS.menu.usb.cdc_msc=Serial + Mass Storage
-ESAT-ADCS.menu.usb.cdc_msc.build.usb_type=USB_TYPE_CDC_MSC
-ESAT-ADCS.menu.usb.none=No USB
-ESAT-ADCS.menu.usb.none.build.usb_type=USB_TYPE_NONE
+ESAT-ADCS.build.usb_type=USB_TYPE_CDC
 
-ESAT-ADCS.menu.dosfs.sflash=SFLASH (QSPI)
-ESAT-ADCS.menu.dosfs.sflash.build.dosfs_sdcard=0
-ESAT-ADCS.menu.dosfs.sflash.build.dosfs_sflash=2
-ESAT-ADCS.menu.dosfs.sdspi=SDCARD (SPI)
-ESAT-ADCS.menu.dosfs.sdspi.build.dosfs_sdcard=1
-ESAT-ADCS.menu.dosfs.sdspi.build.dosfs_sflash=0
-ESAT-ADCS.menu.dosfs.sdmmc=SDCARD (SDIO Default Speed)
-ESAT-ADCS.menu.dosfs.sdmmc.build.dosfs_sdcard=2
-ESAT-ADCS.menu.dosfs.sdmmc.build.dosfs_sflash=0
-ESAT-ADCS.menu.dosfs.sdmmc1=SDCARD (SDIO High Speed)
-ESAT-ADCS.menu.dosfs.sdmmc1.build.dosfs_sdcard=3
-ESAT-ADCS.menu.dosfs.sdmmc1.build.dosfs_sflash=0
-ESAT-ADCS.menu.dosfs.none=None
-ESAT-ADCS.menu.dosfs.none.build.dosfs_sdcard=0
-ESAT-ADCS.menu.dosfs.none.build.dosfs_sflash=0
+ESAT-ADCS.build.dosfs_sdcard=0
+ESAT-ADCS.build.dosfs_sflash=0
 
-ESAT-ADCS.menu.speed.80=80 MHz
-ESAT-ADCS.menu.speed.80.build.f_cpu=80000000L
-ESAT-ADCS.menu.speed.72=72 MHz
-ESAT-ADCS.menu.speed.72.build.f_cpu=72000000L
-ESAT-ADCS.menu.speed.64=64 MHz
-ESAT-ADCS.menu.speed.64.build.f_cpu=64000000L
-ESAT-ADCS.menu.speed.48=48 MHz
-ESAT-ADCS.menu.speed.48.build.f_cpu=48000000L
-ESAT-ADCS.menu.speed.32=32 MHz
-ESAT-ADCS.menu.speed.32.build.f_cpu=32000000L
-ESAT-ADCS.menu.speed.24=24 MHz
-ESAT-ADCS.menu.speed.24.build.f_cpu=24000000L
-ESAT-ADCS.menu.speed.16=16 MHz
-ESAT-ADCS.menu.speed.16.build.f_cpu=16000000L
-ESAT-ADCS.menu.speed.8=8 MHz (No USB)
-ESAT-ADCS.menu.speed.8.build.f_cpu=8000000L
-ESAT-ADCS.menu.speed.4=4 MHz (No USB)
-ESAT-ADCS.menu.speed.4.build.f_cpu=4000000L
-ESAT-ADCS.menu.speed.2=2 MHz (No USB)
-ESAT-ADCS.menu.speed.2.build.f_cpu=2000000L
-ESAT-ADCS.menu.speed.1=1 MHz (No USB)
-ESAT-ADCS.menu.speed.1.build.f_cpu=1000000L
+ESAT-ADCS.build.f_cpu=80000000L
 
-ESAT-ADCS.menu.opt.os=Smallest Code
-ESAT-ADCS.menu.opt.os.build.flags.optimize=-Os
-ESAT-ADCS.menu.opt.os.build.flags.ldspecs=--specs=nano.specs
-ESAT-ADCS.menu.opt.o1=Fast
-ESAT-ADCS.menu.opt.o1.build.flags.optimize=-O1
-ESAT-ADCS.menu.opt.o1.build.flags.ldspecs=
-ESAT-ADCS.menu.opt.o2=Faster
-ESAT-ADCS.menu.opt.o2.build.flags.optimize=-O2
-ESAT-ADCS.menu.opt.o2.build.flags.ldspecs=
-ESAT-ADCS.menu.opt.o3=Fastest
-ESAT-ADCS.menu.opt.o3.build.flags.optimize=-O3
-ESAT-ADCS.menu.opt.o3.build.flags.ldspecs=
+ESAT-ADCS.build.flags.optimize=-Os
+ESAT-ADCS.build.flags.ldspecs=--specs=nano.specs
