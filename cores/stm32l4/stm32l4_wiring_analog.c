@@ -76,11 +76,6 @@ uint32_t analogRead(uint32_t pin)
 {
     uint32_t channel, input;
 
-    if ( pin < A0 )
-    {
-	pin += A0 ;
-    }
-
     if ( !(g_APinDescription[pin].attr & PIN_ATTR_ADC) )
     {
 	return 0;
