@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016 Thomas Roell.  All rights reserved.
+ * Copyright (c) 2018 Theia Space.  All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -29,7 +29,7 @@
 #ifndef _VARIANT_ESAT_ADCS_
 #define _VARIANT_ESAT_ADCS_
 
-// The definitions here needs a STM32L4 core >=1.6.6
+/* The definitions here needs a STM32L4 core >=1.6.6 */
 #define ARDUINO_STM32L4_VARIANT_COMPLIANCE 10606
 
 /*----------------------------------------------------------------------------
@@ -43,12 +43,8 @@
 
 #define USBCON
 
-/** Master clock frequency */
-#define VARIANT_MCK			  F_CPU
-
-/*----------------------------------------------------------------------------
- *        Headers
- *----------------------------------------------------------------------------*/
+/* Master clock frequency. */
+#define VARIANT_MCK F_CPU
 
 #ifdef __cplusplus
 #include "USBAPI.h"
@@ -60,150 +56,75 @@ extern "C"
 {
 #endif // __cplusplus
 
-/*----------------------------------------------------------------------------
- *        Pins
- *----------------------------------------------------------------------------*/
+/* Number of pins defined in PinDescription array. */
+#define NUM_TOTAL_PINS       (33u)
 
-// Number of pins defined in PinDescription array
-#define PINS_COUNT           (28u)
-#define NUM_DIGITAL_PINS     (22u)
-#define NUM_TOTAL_PINS       (47u)
-#define NUM_ANALOG_INPUTS    (6u)
-#define NUM_ANALOG_OUTPUTS   (2u)
-#define analogInputToDigitalPin(p)  ((p < 6u) ? (p) + 14u : -1)
+/* General-purpose input/output. */
+static const uint8_t AGPIO0 = 0; /* Analog input, digital input and output, PWM output. */
+static const uint8_t AGPIO1 = 1; /* Analog input, digital input and output, PWM output. */
+static const uint8_t AGPIO2 = 2; /* Analog input, digital input and output, PWM output. */
+static const uint8_t AGPIO3 = 3; /* Analog input, digital input and output, PWM output. */
+static const uint8_t AGPIO4 = 4; /* Digital input and output, PWM output. */
+static const uint8_t AGPIO5 = 5; /* Digital input and output, PWM output. */
 
-/* Coarse sun sensors */
-static const uint8_t CSSXMINUS = 16; /* Coarse sun sensor on X- panel */
-static const uint8_t CSSXPLUS = 17;  /* Coarse sun sensor on X+ panel */
-static const uint8_t CSSYMINUS = 14; /* Coarse sun sensor on Y- panel */
-static const uint8_t CSSYPLUS = 15;  /* Coarse sun sensor on Y+ panel */
+/* Coarse sun sensors. */
+static const uint8_t CSSXMINUS = 6; /* Coarse sun sensor on X- panel. */
+static const uint8_t CSSXPLUS  = 7; /* Coarse sun sensor on X+ panel. */
+static const uint8_t CSSYMINUS = 8; /* Coarse sun sensor on Y- panel. */
+static const uint8_t CSSYPLUS  = 9; /* Coarse sun sensor on Y+ panel. */
 
-/* Magnetorquer pins */
-static const uint8_t MTQXMINUS = 24; /* Magnetorquer driver (X axis, negative) */
-static const uint8_t MTQXPLUS = 22;  /* Magnetorquer driver (X axis, positive) */
-static const uint8_t MTQYMINUS = 42; /* Magnetorquer driver (Y axis, negative) */
-static const uint8_t MTQYPLUS = 43;  /* Magnetorquer driver (Y axis, positive) */
+/* Power lines. */
+static const uint8_t EN3V3 = 10; /* Enable the 3.3 V line. */
+static const uint8_t EN5V  = 11; /* Enable the 5 V line. */
 
-/* Motor control pins */
-static const uint8_t EN5V = 8; /* Motor control 5 V line. */
+/* LED. */
+static const uint8_t LED_A = 12;
 
-// LEDs
-#define PIN_LED_13           (13u)
-#define PIN_LED_RXL          (25u)
-#define PIN_LED_TXL          (26u)
-#define PIN_LED              PIN_LED_13
-#define PIN_LED2             PIN_LED_RXL
-#define PIN_LED3             PIN_LED_TXL
-#define LED_BUILTIN          PIN_LED_13
+/* Magnetorquers. */
+static const uint8_t MTQXMINUS = 13; /* Magnetorquer driver (X axis, negative). */
+static const uint8_t MTQXPLUS  = 14; /* Magnetorquer driver (X axis, positive). */
+static const uint8_t MTQYMINUS = 15; /* Magnetorquer driver (Y axis, negative). */
+static const uint8_t MTQYPLUS  = 16; /* Magnetorquer driver (Y axis, positive). */
+static const uint8_t MTQZMINUS = 17; /* Magnetorquer driver (Z axis, negative). */
+static const uint8_t MTQZPLUS  = 18; /* Magnetorquer driver (Z axis, positive). */
 
-/*
- * Analog pins
- */
-#define PIN_A0               (14ul)
-#define PIN_A1               (15ul)
-#define PIN_A2               (16ul)
-#define PIN_A3               (17ul)
-#define PIN_A4               (18ul)
-#define PIN_A5               (19ul)
-#define PIN_DAC0             (14ul)
-#define PIN_DAC1             (15ul)
+/* Electronic speed controller. */
+static const uint8_t PWM_A = 19;
 
-static const uint8_t A0  = PIN_A0;
-static const uint8_t A1  = PIN_A1;
-static const uint8_t A2  = PIN_A2;
-static const uint8_t A3  = PIN_A3;
-static const uint8_t A4  = PIN_A4;
-static const uint8_t A5  = PIN_A5;
-static const uint8_t DAC0 = PIN_DAC0;
-static const uint8_t DAC1 = PIN_DAC1;
-#define ADC_RESOLUTION		12
-#define DAC_RESOLUTION		12
+/* Tachometer. */
+static const uint8_t TCH_A = 20;
 
-// Other pins
-#define PIN_ATN              (38ul)
-static const uint8_t ATN = PIN_ATN;
+/* Analog-to-digital conversion. */
+#define ADC_RESOLUTION 12
 
-#define PIN_BUTTON           (44l)
-static const uint8_t BUTTON = PIN_BUTTON;
+/* Pulse-width modulation output. */
+#define PWM_INSTANCE_COUNT  6
 
-/*
- * Serial interfaces
- */
+/* I2C interfaces. */
+#define WIRE_INTERFACES_COUNT 2
+static const uint8_t SCL_O = 21;
+static const uint8_t SDA_O = 22;
+static const uint8_t SCL_A = 23;
+static const uint8_t SDA_A = 24;
 
-#define SERIAL_INTERFACES_COUNT 6
+/* I2S interfaces. */
+#define I2S_INTERFACES_COUNT 0
 
-#define PIN_SERIAL1_RX       (0ul)
-#define PIN_SERIAL1_TX       (1ul)
+/* Serial interfaces. */
+#define SERIAL_INTERFACES_COUNT 0
 
-#define PIN_SERIAL2_RX       (31ul)
-#define PIN_SERIAL2_TX       (30ul)
+/* SPI interfaces. */
+#define SPI_INTERFACES_COUNT 1
+static const uint8_t RST  = 24;
+static const uint8_t MISO = 25;
+static const uint8_t MOSI = 26;
+static const uint8_t SCK  = 28;
 
-#define PIN_SERIAL3_RX       (8ul)
-#define PIN_SERIAL3_TX       (9ul)
-
-#define PIN_SERIAL4_RX       (10ul)
-#define PIN_SERIAL4_TX       (11ul)
-
-#define PIN_SERIAL5_RX       (42ul)
-#define PIN_SERIAL5_TX       (43ul)
-
-/*
- * SPI Interfaces
- */
-#define SPI_INTERFACES_COUNT 3
-
-#define PIN_SPI_MISO         (12u)
-#define PIN_SPI_MOSI         (11u)
-#define PIN_SPI_SCK          (13u)
-
-#define PIN_SPI1_MISO        (22u)
-#define PIN_SPI1_MOSI        (23u)
-#define PIN_SPI1_SCK         (24u)
-
-#define PIN_SPI2_MISO        (4u)
-#define PIN_SPI2_MOSI        (5u)
-#define PIN_SPI2_SCK         (3u)
-
-static const uint8_t SS	  = 10;
-static const uint8_t MOSI = PIN_SPI_MOSI;
-static const uint8_t MISO = PIN_SPI_MISO;
-static const uint8_t SCK  = PIN_SPI_SCK;
-
-/*
- * Wire Interfaces
- */
-#define WIRE_INTERFACES_COUNT 3
-
-#define PIN_WIRE_SDA         (20u)
-#define PIN_WIRE_SCL         (21u)
-
-#define PIN_WIRE1_SDA        (18u)
-#define PIN_WIRE1_SCL        (19u)
-
-#define PIN_WIRE2_SDA        (4u)
-#define PIN_WIRE2_SCL        (3u)
-
-static const uint8_t SDA = PIN_WIRE_SDA;
-static const uint8_t SCL = PIN_WIRE_SCL;
-
-/*
- * I2S Interfaces
- */
-#define I2S_INTERFACES_COUNT 1
-
-#define PIN_I2S_SCK          (2u)
-#define PIN_I2S_FS           (3u)
-#define PIN_I2S_SD           (4u)
-#define PIN_I2S_MCK          (5u)
-
-/*
- * USB
- */
-#define PIN_USB_VBUS        (27ul)
-#define PIN_USB_DM          (28ul)
-#define PIN_USB_DP          (29ul)
-
-#define PWM_INSTANCE_COUNT  4
+/* USB interface. */
+static const uint8_t USB_DM   = 29;
+static const uint8_t USB_DP   = 30;
+static const uint8_t USB_ID   = 31;
+static const uint8_t USB_VBUS = 32;
 
 #ifdef __cplusplus
 }
@@ -215,11 +136,6 @@ static const uint8_t SCL = PIN_WIRE_SCL;
 
 #ifdef __cplusplus
 extern CDC  Serial;
-extern Uart Serial1;
-extern Uart Serial2;
-extern Uart Serial3;
-extern Uart Serial4;
-extern Uart Serial5;
 #endif
 
 // These serial port names are intended to allow libraries and architecture-neutral
@@ -239,18 +155,8 @@ extern Uart Serial5;
 //                            pins are NOT connected to anything by default.
 #define SERIAL_PORT_USBVIRTUAL      Serial
 #define SERIAL_PORT_MONITOR         Serial
-#define SERIAL_PORT_HARDWARE1       Serial1
-#define SERIAL_PORT_HARDWARE2       Serial2
-#define SERIAL_PORT_HARDWARE3       Serial3
-#define SERIAL_PORT_HARDWARE4       Serial4
-#define SERIAL_PORT_HARDWARE5       Serial5
-#define SERIAL_PORT_HARDWARE_OPEN1  Serial1
-#define SERIAL_PORT_HARDWARE_OPEN2  Serial2
-#define SERIAL_PORT_HARDWARE_OPEN3  Serial3
-#define SERIAL_PORT_HARDWARE_OPEN4  Serial4
-#define SERIAL_PORT_HARDWARE_OPEN5  Serial5
 
-// Alias SerialUSB to Serial
+// Alias SerialUSB to Serial.
 #define SerialUSB SERIAL_PORT_USBVIRTUAL
 
 #endif /* _VARIANT_ESAT_ADCS_ */
