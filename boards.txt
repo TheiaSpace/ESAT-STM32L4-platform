@@ -1,8 +1,3 @@
-menu.usb=USB Type
-menu.dosfs=DOSFS
-menu.speed=CPU Speed
-menu.opt=Optimize
-
 ##############################################################
 
 # THEIA ESAT-ADCS
@@ -32,14 +27,12 @@ ESAT-ADCS.build.extra_flags=-DSTM32L476xx -D__FPU_PRESENT=1 -march=armv7e-m -mth
 ESAT-ADCS.build.ldscript=linker_scripts/STM32L476RE_FLASH.ld
 ESAT-ADCS.build.variant=ESAT-ADCS
 ESAT-ADCS.build.variant_system_libs="-L{runtime.platform.path}/system/STM32L4xx/Lib" "-L{runtime.platform.path}/system/CMSIS/Lib" -lstm32l476 -larm_cortexM4lf_math
-ESAT-ADCS.build.variant_system_include="-I{runtime.platform.path}/system/CMSIS/Include" "-I{runtime.platform.path}/system/CMSIS/Device/ST/STM32L4xx/Include" "-I{runtime.platform.path}/system/STM32L4xx/Include" 
+ESAT-ADCS.build.variant_system_include="-I{runtime.platform.path}/system/CMSIS/Include" "-I{runtime.platform.path}/system/CMSIS/Device/ST/STM32L4xx/Include" "-I{runtime.platform.path}/system/STM32L4xx/Include"
 
 ESAT-ADCS.build.usb_type=USB_TYPE_CDC
 
 ESAT-ADCS.build.dosfs_sdcard=0
 ESAT-ADCS.build.dosfs_sflash=0
-
-ESAT-ADCS.build.f_cpu=80000000L
 
 ESAT-ADCS.build.flags.optimize=-Os
 ESAT-ADCS.build.flags.ldspecs=--specs=nano.specs
