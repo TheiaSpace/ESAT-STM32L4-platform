@@ -41,6 +41,7 @@ extern int (*stm32l4_stdio_put)(char, FILE*);
 
 static int serialusb_stdio_put(char data, FILE *fp)
 {
+    (void) fp; // Ignore fp.
     return Serial.write(&data, 1);
 }
 
@@ -77,6 +78,8 @@ void CDC::begin(unsigned long baudrate)
 
 void CDC::begin(unsigned long baudrate, uint16_t config)
 {
+    (void) baudrate; // Ignore baudrate.
+    (void) config; // Ignore config.
     /* If USBD_CDC has already been enabled/initialized by STDIO, just add the notify.
      */
     if (_usbd_cdc->state == USBD_CDC_STATE_INIT) {
