@@ -106,7 +106,7 @@ static void stm32l4_i2c_master_receive(stm32l4_i2c_t *i2c)
 
     i2c->state = I2C_STATE_MASTER_RECEIVE;
 
-    i2c->xf_count = 0;
+    i2c->rx_xf_count = 0;
 
     count = i2c->rx_count;
 
@@ -151,7 +151,7 @@ static void stm32l4_i2c_master_transmit(stm32l4_i2c_t *i2c)
 
     i2c->state = I2C_STATE_MASTER_TRANSMIT;
 
-    i2c->xf_count = 0;
+    i2c->tx_xf_count = 0;
 
     count = i2c->tx_count;
 
@@ -191,9 +191,9 @@ static void stm32l4_i2c_master_transmit(stm32l4_i2c_t *i2c)
 	/* Load TXDR early to avoid the first TXE event interrupt.
 	 */
 
-	I2C->TXDR = *(i2c->tx_data)++;
+	I2C->TXDR = i2c->tx_data[i2c->tx_xf_count];
 		
-	i2c->xf_count++;
+	i2c->tx_xf_count++;
 
 	I2C->CR2 = (i2c_cr2 | I2C_CR2_START | (count << 16));
 
@@ -206,6 +206,8 @@ static uint32_t stm32l4_i2c_slave_address_match(stm32l4_i2c_t *i2c)
     I2C_TypeDef *I2C = i2c->I2C;
     uint32_t events;
 
+    i2c->rx_xf_count = 0;
+    i2c->tx_xf_count = 0;
     events = 0;
 
     i2c->xf_address = (I2C->ISR >> 17) & 0x7f;
@@ -243,8 +245,6 @@ static uint32_t stm32l4_i2c_slave_address_match(stm32l4_i2c_t *i2c)
     if (i2c->state == I2C_STATE_SLAVE_TRANSMIT)
     {
 	I2C->ISR |= I2C_ISR_TXE;
-
-	I2C->TXDR = *(i2c->tx_data)++;
     }
     
     return events;
@@ -275,13 +275,12 @@ static void stm32l4_i2c_event_interrupt(stm32l4_i2c_t *i2c)
     case I2C_STATE_SLAVE_RECEIVE:
 	if (i2c_isr & I2C_ISR_RXNE)
 	{
-	    *(i2c->rx_data)++ = I2C->RXDR;
-	    
-	    i2c->xf_count++;
-	    
-	    if (i2c->xf_count == i2c->rx_count)
+	    i2c->rx_data[i2c->rx_xf_count] = I2C->RXDR;
+	    i2c->rx_xf_count++;
+	    if (i2c->rx_xf_count >= i2c->rx_count)
 	    {
 		(*i2c->callback)(i2c->context, I2C_EVENT_RECEIVE_REQUEST);
+		i2c->rx_xf_count = 0;
 	    }
 	}
 	else
@@ -320,10 +319,10 @@ static void stm32l4_i2c_event_interrupt(stm32l4_i2c_t *i2c)
 	 */
 	if (i2c_isr & (I2C_ISR_ADDR | I2C_ISR_NACKF | I2C_ISR_STOPF))
 	{
-	    I2C->CR1 &= ~(I2C_CR1_TXIE | I2C_CR1_NACKIE | I2C_CR1_STOPIE);
 
 	    if (i2c_isr & I2C_ISR_ADDR)
 	    {
+		I2C->CR1 &= ~(I2C_CR1_TXIE | I2C_CR1_NACKIE | I2C_CR1_STOPIE);
 		if (i2c->events & I2C_EVENT_TRANSMIT_DONE)
 		{
 		    (*i2c->callback)(i2c->context, I2C_EVENT_TRANSMIT_DONE);
@@ -333,25 +332,33 @@ static void stm32l4_i2c_event_interrupt(stm32l4_i2c_t *i2c)
 	    }
 	    else
 	    {
-		I2C->ICR = (I2C_ICR_NACKCF | I2C_ICR_STOPCF);
-
-		i2c->state = I2C_STATE_READY;
-		
-		events |= I2C_EVENT_TRANSMIT_DONE;
+		if (i2c_isr & I2C_ISR_NACKF)
+		{
+		    I2C->ICR = I2C_ICR_NACKCF;
+		    I2C->CR1 &= ~(I2C_CR1_TXIE | I2C_CR1_NACKIE);
+		    events |= I2C_EVENT_TRANSMIT_DONE;
+		}
+		if (i2c_isr & I2C_ISR_STOPF)
+		{
+		    I2C->ICR = I2C_ICR_STOPCF;
+		    I2C->CR1 &= ~(I2C_CR1_TXIE | I2C_CR1_NACKIE | I2C_CR1_STOPIE);
+		    i2c->state = I2C_STATE_READY;
+		}
 	    }
 	}
 	else 
 	{
-	    if (i2c_isr & I2C_ISR_TXE)
+	    if (i2c_isr & I2C_ISR_TXIS)
 	    {
-		i2c->xf_count++;
-	
-		if (i2c->xf_count == i2c->tx_count)
+		if (i2c->tx_xf_count >= i2c->tx_count)
 		{
-		    (*i2c->callback)(i2c->context, I2C_EVENT_TRANSMIT_REQUEST);
+		    I2C->TXDR = 0;
 		}
-
-		I2C->TXDR = *(i2c->tx_data)++;
+		else
+		{
+		    I2C->TXDR = i2c->tx_data[i2c->tx_xf_count];
+		    i2c->tx_xf_count++;
+		}
 	    }
 	}
 	break;
@@ -362,15 +369,15 @@ static void stm32l4_i2c_event_interrupt(stm32l4_i2c_t *i2c)
     case I2C_STATE_MASTER_RECEIVE:
 	if (i2c_isr & I2C_ISR_RXNE)
 	{
-	    *(i2c->rx_data)++ = I2C->RXDR;
+	    i2c->rx_data[i2c->rx_xf_count] = I2C->RXDR;
 	    
-	    i2c->xf_count++;
+	    i2c->rx_xf_count++;
 	}
 	else if (i2c_isr & I2C_ISR_TCR)
 	{
 	    i2c_cr2 = (i2c->xf_address << 1);
 	    
-	    count = (i2c->rx_count - i2c->xf_count);
+	    count = (i2c->rx_count - i2c->rx_xf_count);
 	    
 	    if (count > 255)
 	    {
@@ -396,7 +403,7 @@ static void stm32l4_i2c_event_interrupt(stm32l4_i2c_t *i2c)
 	    {
 		I2C->CR1 &= ~(I2C_CR1_NACKIE | I2C_CR1_STOPIE | I2C_CR1_TCIE | I2C_CR1_RXDMAEN);
 
-		i2c->xf_count = stm32l4_dma_stop(&i2c->rx_dma);
+		i2c->rx_xf_count = stm32l4_dma_stop(&i2c->rx_dma);
 	    }
 	    else
 	    {
@@ -465,7 +472,7 @@ static void stm32l4_i2c_event_interrupt(stm32l4_i2c_t *i2c)
 	    {
 		I2C->ICR = I2C_ICR_NACKCF;
 
-		if (i2c->xf_count == 0)
+		if (i2c->tx_xf_count == 0)
 		{
 		    i2c->xf_status |= I2C_STATUS_ADDRESS_NACK;
 		}
@@ -490,7 +497,7 @@ static void stm32l4_i2c_event_interrupt(stm32l4_i2c_t *i2c)
 		{
 		    I2C->CR1 &= ~(I2C_CR1_NACKIE | I2C_CR1_STOPIE | I2C_CR1_TCIE | I2C_CR1_TXDMAEN);
 
-		    i2c->xf_count = stm32l4_dma_stop(&i2c->tx_dma);
+		    i2c->tx_xf_count = stm32l4_dma_stop(&i2c->tx_dma);
 		}
 		else
 		{
@@ -541,15 +548,15 @@ static void stm32l4_i2c_event_interrupt(stm32l4_i2c_t *i2c)
 	{
 	    if (i2c_isr & I2C_ISR_TXE)
 	    {
-		I2C->TXDR = *(i2c->tx_data)++;
+		I2C->TXDR = i2c->tx_data[i2c->tx_xf_count];
 		
-		i2c->xf_count++;
+		i2c->tx_xf_count++;
 	    }
 	    else if (i2c_isr & I2C_ISR_TCR)
 	    {
 		i2c_cr2 = (i2c->xf_address << 1);
 		
-		count = i2c->tx_count - i2c->xf_count;
+		count = i2c->tx_count - i2c->tx_xf_count;
 		
 		if (count > 255)
 		{
@@ -1255,15 +1262,15 @@ bool stm32l4_i2c_service(stm32l4_i2c_t *i2c, uint8_t *xf_data, uint16_t xf_count
 	return false;
     }
 
-    i2c->xf_count = 0;
-
     if (i2c->state == I2C_STATE_SLAVE_RECEIVE)
     {
+	i2c->rx_xf_count = 0;
 	i2c->rx_data = xf_data;
 	i2c->rx_count = xf_count;
     }
     else
     {
+	i2c->tx_xf_count = 0;
 	i2c->tx_data = xf_data;
 	i2c->tx_count = xf_count;
     }
@@ -1283,7 +1290,7 @@ unsigned int stm32l4_i2c_address(stm32l4_i2c_t *i2c)
 
 unsigned int stm32l4_i2c_count(stm32l4_i2c_t *i2c)
 {
-    return i2c->xf_count;
+    return i2c->rx_xf_count;
 }
 
 unsigned int stm32l4_i2c_status(stm32l4_i2c_t *i2c)

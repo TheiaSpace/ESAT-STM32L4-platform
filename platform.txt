@@ -17,8 +17,8 @@
 # For more info:
 # https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5---3rd-party-Hardware-specification
 
-name=STM32L4
-version=1.6.4
+name=Theia Space's ESAT boards (STM32L4)
+version=1.0.0
 
 # Compile variables
 # -----------------
@@ -48,9 +48,7 @@ compiler.suffix.cmd.windows=dfu-suffix.exe
 compiler.ldflags=-mcpu={build.mcu} -mthumb -Wl,--cref -Wl,--check-sections -Wl,--gc-sections -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align
 compiler.size.cmd=arm-none-eabi-size
 compiler.define=-DARDUINO=
-compiler.platform.path={runtime.platform.path}/tools/windows/
-compiler.platform.path.macosx={runtime.platform.path}/tools/macosx/
-compiler.platform.path.linux={runtime.platform.path}/tools/linux/
+compiler.dfu-util.path={runtime.tools.esat-dfu-util.path}
 
 # this can be overriden in boards.txt
 build.extra_flags=
@@ -98,10 +96,10 @@ recipe.objcopy.dfu.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf
 recipe.objcopy.iap.pattern="{compiler.path}{compiler.elf2hex.cmd}" {compiler.elf2hex.bin.flags} {compiler.elf2hex.extra_flags} -R .boot "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.iap"
 
 ## Append DFU suffix (dfu file)
-recipe.hooks.objcopy.postobjcopy.1.pattern="{compiler.platform.path}/{compiler.suffix.cmd}"  -v "{build.vid}" -p "{build.pid}" -d "{build.did}" -a "{build.path}/{build.project_name}.dfu"
+recipe.hooks.objcopy.postobjcopy.1.pattern="{compiler.dfu-util.path}/{compiler.suffix.cmd}"  -v "{build.vid}" -p "{build.pid}" -d "{build.did}" -a "{build.path}/{build.project_name}.dfu"
 
 ## Append DFU suffix (iap file)
-recipe.hooks.objcopy.postobjcopy.2.pattern="{compiler.platform.path}/{compiler.suffix.cmd}"  -v "{build.vid}" -p "{build.pid}" -d "{build.did}" -a "{build.path}/{build.project_name}.iap"
+recipe.hooks.objcopy.postobjcopy.2.pattern="{compiler.dfu-util.path}/{compiler.suffix.cmd}"  -v "{build.vid}" -p "{build.pid}" -d "{build.did}" -a "{build.path}/{build.project_name}.iap"
 
 ## Save hex
 recipe.output.tmp_file={build.project_name}.iap
@@ -114,35 +112,8 @@ recipe.size.regex=^\.(?:boot|text|rodata|data|rodata2|data2|backup)\s+([0-9]+).*
 
 # Uploader tools
 # --------------
-
-# DFU
-tools.stm32l4_dfu.cmd=stm32l4-upload
-tools.stm32l4_dfu.cmd.windows=stm32l4-upload.bat
-tools.stm32l4_dfu.path={runtime.platform.path}/tools/windows
-tools.stm32l4_dfu.path.macosx={runtime.platform.path}/tools/macosx
-tools.stm32l4_dfu.path.linux={runtime.platform.path}/tools/linux
-tools.stm32l4_dfu.upload.params.verbose=-v
+tools.stm32l4_dfu.path={runtime.tools.esat-dfu-util.path}
+tools.stm32l4_dfu.cmd.path={path}/stm32l4-upload
 tools.stm32l4_dfu.upload.params.quiet=
-tools.stm32l4_dfu.upload.pattern="{path}/{cmd}" "{build.vid}" "{build.pid}" "{build.path}/{build.project_name}.dfu"
-tools.stm32l4_dfu.program.params.verbose=-v
-tools.stm32l4_dfu.program.params.quiet=
-tools.stm32l4_dfu.program.pattern="{path}/{cmd}" "{build.vid}" "{build.pid}" "{build.path}/{build.project_name}.dfu"
-tools.stm32l4_dfu.erase.params.verbose=-v
-tools.stm32l4_dfu.erase.params.quiet=
-tools.stm32l4_dfu.erase.pattern=
-
-# OpenOCD
-tools.stm32l4_openocd.path={runtime.platform.path}/tools/windows/openocd/bin
-tools.stm32l4_openocd.path.macosx={runtime.platform.path}/tools/macosx/openocd/bin
-tools.stm32l4_openocd.path.linux={runtime.platform.path}/tools/linux/openocd/bin
-tools.stm32l4_openocd.cmd=openocd
-tools.stm32l4_openocd.cmd.windows=openocd.exe
-tools.stm32l4_openocd.upload.params.verbose=-d2
-tools.stm32l4_openocd.upload.params.quiet=-d0
-tools.stm32l4_openocd.upload.pattern="{path}/{cmd}" {upload.verbose} -s "{runtime.platform.path}/tools/share/openocd/scripts/" -f "{runtime.platform.path}/variants/{build.variant}/{build.openocdscript}" -c "telnet_port disabled; program {{{build.path}/{build.project_name}.elf}} verify reset; shutdown"
-tools.stm32l4_openocd.program.params.verbose=-d2
-tools.stm32l4_openocd.program.params.quiet=-d0
-tools.stm32l4_openocd.program.pattern="{path}/{cmd}" {program.verbose} -s "{runtime.platform.path}/tools/share/openocd/scripts/" -f "{runtime.platform.path}/variants/{build.variant}/{build.openocdscript}" -c "telnet_port disabled; program {{{build.path}/{build.project_name}.elf}} verify reset; shutdown"
-tools.stm32l4_openocd.erase.params.verbose=-d3
-tools.stm32l4_openocd.erase.params.quiet=-d0
-tools.stm32l4_openocd.erase.pattern=
+tools.stm32l4_dfu.upload.params.verbose=-v
+tools.stm32l4_dfu.upload.pattern={cmd.path} "{build.vid}" "{build.pid}" "{build.path}/{build.project_name}.dfu"
