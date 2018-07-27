@@ -76,17 +76,17 @@ extern const PinDescription g_APinDescription[NUM_TOTAL_PINS] =
     { GPIOA, GPIO_PIN_MASK(GPIO_PIN_PA3),  GPIO_PIN_PA3,            0,                                                PWM_INSTANCE_NONE,  PWM_CHANNEL_NONE, ADC_INPUT_NONE },
     // 12: LED PWM output.
     { GPIOA, GPIO_PIN_MASK(GPIO_PIN_PA2),  GPIO_PIN_PA2_TIM5_CH3,   (PIN_ATTR_PWM),                                   PWM_INSTANCE_TIM5,  PWM_CHANNEL_3,    ADC_INPUT_NONE },
-    // 13: MTQX- PWM output.
+    // 13: MTQX+ PWM output.
     { GPIOB, GPIO_PIN_MASK(GPIO_PIN_PB5),  GPIO_PIN_PB5_TIM3_CH2,   (PIN_ATTR_PWM),                                   PWM_INSTANCE_TIM3,  PWM_CHANNEL_2,    ADC_INPUT_NONE },
-    // 14: MTQX+ PWM output.
+    // 14: MTQX- PWM output.
     { GPIOB, GPIO_PIN_MASK(GPIO_PIN_PB4),  GPIO_PIN_PB4_TIM3_CH1,   (PIN_ATTR_PWM),                                   PWM_INSTANCE_TIM3,  PWM_CHANNEL_1,    ADC_INPUT_NONE },
-    // 15: MTQY- PWM output.
+    // 15: MTQY+ PWM output.
     { GPIOB, GPIO_PIN_MASK(GPIO_PIN_PB7),  GPIO_PIN_PB7_TIM4_CH2,   (PIN_ATTR_PWM),                                   PWM_INSTANCE_TIM4,  PWM_CHANNEL_2,    ADC_INPUT_NONE },
-    // 16: MTQY+ PWM output.
+    // 16: MTQY- PWM output.
     { GPIOB, GPIO_PIN_MASK(GPIO_PIN_PB6),  GPIO_PIN_PB6_TIM4_CH1,   (PIN_ATTR_PWM),                                   PWM_INSTANCE_TIM4,  PWM_CHANNEL_1,    ADC_INPUT_NONE },
-    // 17: MTQZ- PWM output.
+    // 17: MTQZ+ PWM output.
     { GPIOA, GPIO_PIN_MASK(GPIO_PIN_PA1),  GPIO_PIN_PA1_TIM5_CH2,   (PIN_ATTR_PWM),                                   PWM_INSTANCE_TIM5,  PWM_CHANNEL_2,    ADC_INPUT_NONE },
-    // 18: MTQZ+ PWM output.
+    // 18: MTQZ- PWM output.
     { GPIOA, GPIO_PIN_MASK(GPIO_PIN_PA0),  GPIO_PIN_PA0_TIM5_CH1,   (PIN_ATTR_PWM),                                   PWM_INSTANCE_TIM5,  PWM_CHANNEL_1,    ADC_INPUT_NONE },
     // 19: PWM_A PWM output.
     { GPIOC, GPIO_PIN_MASK(GPIO_PIN_PC6),  GPIO_PIN_PC6,            0,                                                PWM_INSTANCE_NONE,  PWM_CHANNEL_NONE, ADC_INPUT_NONE },

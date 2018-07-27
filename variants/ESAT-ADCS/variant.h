@@ -81,12 +81,12 @@ static const uint8_t EN5V  = 11; /* Enable the 5 V line. */
 static const uint8_t LED_A = 12;
 
 /* Magnetorquers. */
-static const uint8_t MTQXMINUS = 13; /* Magnetorquer driver (X axis, negative). */
-static const uint8_t MTQXPLUS  = 14; /* Magnetorquer driver (X axis, positive). */
-static const uint8_t MTQYMINUS = 15; /* Magnetorquer driver (Y axis, negative). */
-static const uint8_t MTQYPLUS  = 16; /* Magnetorquer driver (Y axis, positive). */
-static const uint8_t MTQZMINUS = 17; /* Magnetorquer driver (Z axis, negative). */
-static const uint8_t MTQZPLUS  = 18; /* Magnetorquer driver (Z axis, positive). */
+static const uint8_t MTQXMINUS = 14; /* Magnetorquer driver (X axis, negative). */
+static const uint8_t MTQXPLUS  = 13; /* Magnetorquer driver (X axis, positive). */
+static const uint8_t MTQYMINUS = 16; /* Magnetorquer driver (Y axis, negative). */
+static const uint8_t MTQYPLUS  = 15; /* Magnetorquer driver (Y axis, positive). */
+static const uint8_t MTQZMINUS = 18; /* Magnetorquer driver (Z axis, negative). */
+static const uint8_t MTQZPLUS  = 17; /* Magnetorquer driver (Z axis, positive). */
 
 /* Electronic speed controller. */
 static const uint8_t PWM_A = 19;
