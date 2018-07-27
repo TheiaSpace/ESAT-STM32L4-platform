@@ -114,6 +114,7 @@ recipe.size.regex=^\.(?:boot|text|rodata|data|rodata2|data2|backup)\s+([0-9]+).*
 # --------------
 tools.stm32l4_dfu.path={runtime.tools.esat-dfu-util.path}
 tools.stm32l4_dfu.cmd.path={path}/stm32l4-upload
+tools.stm32l4_dfu.cmd.path.windows={path}/stm32l4-upload.bat
 tools.stm32l4_dfu.upload.params.quiet=
 tools.stm32l4_dfu.upload.params.verbose=-v
 tools.stm32l4_dfu.upload.pattern={cmd.path} "{build.vid}" "{build.pid}" "{build.path}/{build.project_name}.dfu"
