@@ -3,8 +3,8 @@
 # THEIA ESAT-ADCS
 # ---------------------------------------
 ESAT-ADCS.name=ESAT-ADCS
-ESAT-ADCS.vid.0=0x1209
-ESAT-ADCS.pid.0=0x6667
+ESAT-ADCS.vid.0=0x1d50
+ESAT-ADCS.pid.0=0x6137
 
 ESAT-ADCS.upload.tool=stm32l4_dfu
 ESAT-ADCS.upload.protocol=dfu
@@ -18,11 +18,11 @@ ESAT-ADCS.build.f_cpu=80000000L
 ESAT-ADCS.build.board=ESAT_ADCS
 ESAT-ADCS.build.arch=STM32L4
 ESAT-ADCS.build.core=stm32l4
-ESAT-ADCS.build.vid=0x1209
-ESAT-ADCS.build.pid=0x6667
+ESAT-ADCS.build.vid=0x1d50
+ESAT-ADCS.build.pid=0x6137
 ESAT-ADCS.build.did=0xffff
-ESAT-ADCS.build.usb_manufacturer=u"\u0324Tlera Corporation"
-ESAT-ADCS.build.usb_product=u"\u0314ESATADCS"
+ESAT-ADCS.build.usb_manufacturer="Theia Space, UPM"
+ESAT-ADCS.build.usb_product="ESAT ADCS"
 ESAT-ADCS.build.extra_flags=-DSTM32L476xx -D__FPU_PRESENT=1 -march=armv7e-m -mthumb -mfloat-abi=hard -mfpu=fpv4-sp-d16 -mabi=aapcs -mslow-flash-data -fsingle-precision-constant {build.usb_flags} {build.dosfs_flags}
 ESAT-ADCS.build.ldscript=linker_scripts/STM32L476RE_FLASH.ld
 ESAT-ADCS.build.variant=ESAT-ADCS
