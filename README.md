@@ -1,3 +1,18 @@
+# Arduino Core for Theia Space's ESAT Boards (STM32L4)
+
+These are the support files needed to use Theia Space's STM32L4-based
+ESAT boards with Arduino.
+
+Use Arduino 1.8.0 or newer.
+
+
+## Supported boards
+
+ESAT ADCS.
+
+
+## Copyright and license
+
 Copyright (C) 2018 Theia Space, Universidad Politécnica de Madrid
 
 This file is part of Theia Space's ESAT core for Arduino for
@@ -22,19 +37,6 @@ You can redistribute and/or modify Theia Space's ESAT Boards (STM32L4)
 as a whole under the terms of the GNU Lesser General Public License as
 published by the Free Software Foundation; either version 2.1 of the
 License, or (at your option) any later version.
-
-
-# Arduino Core for Theia Space's ESAT Boards (STM32L4)
-
-These are the support files needed to use Theia Space's STM32L4-based
-ESAT boards with Arduino.
-
-Use Arduino 1.8.0 or newer.
-
-
-## Supported boards
-
-ESAT ADCS.
 
 
 ## Credits
