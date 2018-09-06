@@ -38,5 +38,5 @@ ESAT ADCS.
 
 ## Credits
 
-This core is a fork of the [Arduino Core for STM32L4 based boards by Thomas Roell](), which is based on [Arduino SAMD Core](https://github.com/arduino/ArduinoCore-samd)
+This core is a fork of the [Arduino Core for STM32L4 based boards by Thomas Roell](https://github.com/GrumpyOldPizza/arduino-STM32L4), which is based on [Arduino SAMD Core](https://github.com/arduino/ArduinoCore-samd)
 
