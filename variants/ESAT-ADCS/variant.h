@@ -89,7 +89,7 @@ static const uint8_t MTQZMINUS = 18; /* Magnetorquer driver (Z axis, negative). 
 static const uint8_t MTQZPLUS  = 17; /* Magnetorquer driver (Z axis, positive). */
 
 /* Electronic speed controller. */
-static const uint8_t PWM_A = 19;
+static const uint8_t PWM_A = 19; /* ADCS electronic speed controller PWM control output. */
 
 /* Tachometer. */
 static const uint8_t TCH_A = 20; /* ADCS tachometer interrupt input. */
