@@ -78,7 +78,7 @@ static const uint8_t EN3V3 = 10; /* Enable the 3.3 V line. */
 static const uint8_t EN5V  = 11; /* Enable the 5 V line. */
 
 /* LED. */
-static const uint8_t LED_A = 12;
+static const uint8_t LED_A = 12; /* ADCS heartbeat LED. */
 
 /* Magnetorquers. */
 static const uint8_t MTQXMINUS = 14; /* Magnetorquer driver (X axis, negative). */
@@ -89,10 +89,10 @@ static const uint8_t MTQZMINUS = 18; /* Magnetorquer driver (Z axis, negative). 
 static const uint8_t MTQZPLUS  = 17; /* Magnetorquer driver (Z axis, positive). */
 
 /* Electronic speed controller. */
-static const uint8_t PWM_A = 19;
+static const uint8_t PWM_A = 19; /* ADCS electronic speed controller PWM control output. */
 
 /* Tachometer. */
-static const uint8_t TCH_A = 20;
+static const uint8_t TCH_A = 20; /* ADCS tachometer interrupt input. */
 
 /* Analog-to-digital conversion. */
 #define ADC_RESOLUTION 12
@@ -102,10 +102,10 @@ static const uint8_t TCH_A = 20;
 
 /* I2C interfaces. */
 #define WIRE_INTERFACES_COUNT 2
-static const uint8_t SCL_O = 21;
-static const uint8_t SDA_O = 22;
-static const uint8_t SCL_A = 23;
-static const uint8_t SDA_A = 24;
+static const uint8_t SCL_O = 21; /* OBC I2C bus, serial clock. */
+static const uint8_t SDA_O = 22; /* OBC I2C bus, serial data. */
+static const uint8_t SCL_A = 23; /* ADCS I2C bus, serial clock. */
+static const uint8_t SDA_A = 24; /* ADCS I2C bus, serial data. */
 #define WireOBC (Wire) /* OBC I2C bus. */
 #define WireADCS (Wire1) /* ADCS I2C bus. */
 
@@ -117,16 +117,16 @@ static const uint8_t SDA_A = 24;
 
 /* SPI interfaces. */
 #define SPI_INTERFACES_COUNT 1
-static const uint8_t RST  = 24;
-static const uint8_t MISO = 25;
-static const uint8_t MOSI = 26;
-static const uint8_t SCK  = 28;
+static const uint8_t RST  = 24; /* SPI, reset. */
+static const uint8_t MISO = 25; /* SPI, master input slave output. */
+static const uint8_t MOSI = 26; /* SPI, master output slave input. */
+static const uint8_t SCK  = 28; /* SPI, serial clock. */
 
 /* USB interface. */
-static const uint8_t USB_DM   = 29;
-static const uint8_t USB_DP   = 30;
-static const uint8_t USB_ID   = 31;
-static const uint8_t USB_VBUS = 32;
+static const uint8_t USB_DM   = 29; /* USB, D- terminal. */
+static const uint8_t USB_DP   = 30; /* USB, D+ terminal. */
+static const uint8_t USB_ID   = 31; /* USB, ID terminal. */
+static const uint8_t USB_VBUS = 32; /* USB, V_BUS terminal. */
 
 #ifdef __cplusplus
 }
