@@ -78,7 +78,7 @@ static const uint8_t EN3V3 = 10; /* Enable the 3.3 V line. */
 static const uint8_t EN5V  = 11; /* Enable the 5 V line. */
 
 /* LED. */
-static const uint8_t LED_A = 12;
+static const uint8_t LED_A = 12; /* ADCS heartbeat LED. */
 
 /* Magnetorquers. */
 static const uint8_t MTQXMINUS = 14; /* Magnetorquer driver (X axis, negative). */
