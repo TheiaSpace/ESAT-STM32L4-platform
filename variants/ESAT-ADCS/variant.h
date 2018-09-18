@@ -102,10 +102,10 @@ static const uint8_t TCH_A = 20;
 
 /* I2C interfaces. */
 #define WIRE_INTERFACES_COUNT 2
-static const uint8_t SCL_O = 21;
-static const uint8_t SDA_O = 22;
-static const uint8_t SCL_A = 23;
-static const uint8_t SDA_A = 24;
+static const uint8_t SCL_O = 21; /* OBC I2C bus, serial clock. */
+static const uint8_t SDA_O = 22; /* OBC I2C bus, serial data. */
+static const uint8_t SCL_A = 23; /* ADCS I2C bus, serial clock. */
+static const uint8_t SDA_A = 24; /* ADCS I2C bus, serial data. */
 #define WireOBC (Wire) /* OBC I2C bus. */
 #define WireADCS (Wire1) /* ADCS I2C bus. */
 
