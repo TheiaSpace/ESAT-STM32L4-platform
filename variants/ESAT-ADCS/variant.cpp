@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018 Theia Space.  All rights reserved.
+ * Copyright (c) 2018 Theia Space, Universidad Politécnica de Madrid.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
