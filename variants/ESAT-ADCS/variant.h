@@ -92,7 +92,7 @@ static const uint8_t MTQZPLUS  = 17; /* Magnetorquer driver (Z axis, positive). 
 static const uint8_t PWM_A = 19;
 
 /* Tachometer. */
-static const uint8_t TCH_A = 20;
+static const uint8_t TCH_A = 20; /* ADCS tachometer interrupt input. */
 
 /* Analog-to-digital conversion. */
 #define ADC_RESOLUTION 12
