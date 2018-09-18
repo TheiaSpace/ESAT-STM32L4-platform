@@ -117,10 +117,10 @@ static const uint8_t SDA_A = 24;
 
 /* SPI interfaces. */
 #define SPI_INTERFACES_COUNT 1
-static const uint8_t RST  = 24;
-static const uint8_t MISO = 25;
-static const uint8_t MOSI = 26;
-static const uint8_t SCK  = 28;
+static const uint8_t RST  = 24; /* SPI, reset. */
+static const uint8_t MISO = 25; /* SPI, master input slave output. */
+static const uint8_t MOSI = 26; /* SPI, master output slave input. */
+static const uint8_t SCK  = 28; /* SPI, serial clock. */
 
 /* USB interface. */
 static const uint8_t USB_DM   = 29; /* USB, D- terminal. */
