@@ -123,10 +123,10 @@ static const uint8_t MOSI = 26;
 static const uint8_t SCK  = 28;
 
 /* USB interface. */
-static const uint8_t USB_DM   = 29;
-static const uint8_t USB_DP   = 30;
-static const uint8_t USB_ID   = 31;
-static const uint8_t USB_VBUS = 32;
+static const uint8_t USB_DM   = 29; /* USB, D- terminal. */
+static const uint8_t USB_DP   = 30; /* USB, D+ terminal. */
+static const uint8_t USB_ID   = 31; /* USB, ID terminal. */
+static const uint8_t USB_VBUS = 32; /* USB, V_BUS terminal. */
 
 #ifdef __cplusplus
 }
