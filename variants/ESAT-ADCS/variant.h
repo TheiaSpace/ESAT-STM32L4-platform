@@ -106,6 +106,8 @@ static const uint8_t SCL_O = 21;
 static const uint8_t SDA_O = 22;
 static const uint8_t SCL_A = 23;
 static const uint8_t SDA_A = 24;
+#define WireOBC (Wire) /* OBC I2C bus. */
+#define WireADCS (Wire1) /* ADCS I2C bus. */
 
 /* I2S interfaces. */
 #define I2S_INTERFACES_COUNT 0
