@@ -25,10 +25,10 @@ several software libraries and components which you can redistribute
 and/or modify under the terms of their respective licenses:
 
   * Unless otherwise state in their contents, you can distribute
-    and/or modify all files under the contents of the GNU General
-    Public License as published by the Free Software Foundation;
-    either version 2.1 of the License, or (at your option) any later
-    version.
+    and/or modify all files under the contents of the GNU Lesser
+    General Public License as published by the Free Software
+    Foundation; either version 2.1 of the License, or (at your option)
+    any later version.
 
   * When a file has a license note, you can distribute and/or modify
     it under the terms stated in said license note.
