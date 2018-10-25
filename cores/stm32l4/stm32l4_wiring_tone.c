@@ -37,6 +37,8 @@ static stm32l4_timer_t stm32l4_tone;
 
 static void tone_event_callback(void *context, uint32_t events)
 {
+    (void) context; // Ignore context.
+    (void) events; // Ignore events.
     if (toneCount) {
       if (toneGPIO->ODR & toneBit) {
 	    toneGPIO->BRR = toneBit;

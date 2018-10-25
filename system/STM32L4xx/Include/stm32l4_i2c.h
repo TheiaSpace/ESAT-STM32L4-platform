@@ -125,7 +125,8 @@ typedef struct _stm32l4_i2c_t {
     uint16_t                     xf_address;
     uint16_t                     xf_control;
     uint16_t                     xf_status;
-    uint16_t                     xf_count;
+    uint16_t                     rx_xf_count;
+    uint16_t                     tx_xf_count;
     uint16_t                     tx_count;
     uint16_t                     rx_count;
     const uint8_t                *tx_data;

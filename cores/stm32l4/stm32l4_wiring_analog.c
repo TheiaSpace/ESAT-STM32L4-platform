@@ -44,10 +44,13 @@ static int _writeResolution = 8;
 static uint32_t _writeFrequency[PWM_INSTANCE_COUNT];
 static uint32_t _writeRange[PWM_INSTANCE_COUNT];
 
+#if defined(PIN_DAC0) || defined(PIN_DAC1)
 static uint8_t _writeCalibrate = 3;
+#endif /* defined(PIN_DAC0) || defined(PIN_DAC1) */
 
 void analogReference(eAnalogReference reference)
 {
+    (void) reference; // Ignore reference.
 }
 
 void analogReadResolution(int resolution)
@@ -74,13 +77,6 @@ static inline uint32_t mapResolution(uint32_t value, uint32_t from, uint32_t to)
 
 uint32_t analogRead(uint32_t pin)
 {
-    uint32_t channel, input;
-
-    if ( pin < A0 )
-    {
-	pin += A0 ;
-    }
-
     if ( !(g_APinDescription[pin].attr & PIN_ATTR_ADC) )
     {
 	return 0;
@@ -89,7 +85,7 @@ uint32_t analogRead(uint32_t pin)
 #if defined(PIN_DAC0) || defined(PIN_DAC1)
     if ( g_APinDescription[pin].attr & PIN_ATTR_DAC )
     {
-	channel = ((pin == PIN_DAC0) ? DAC_CHANNEL_1 : DAC_CHANNEL_2);
+	const uint32_t channel = ((pin == PIN_DAC0) ? DAC_CHANNEL_1 : DAC_CHANNEL_2);
 
 	if (!(_writeCalibrate & (1ul << channel)))
 	{
@@ -113,7 +109,7 @@ uint32_t analogRead(uint32_t pin)
 
     stm32l4_gpio_pin_configure(g_APinDescription[pin].pin, (GPIO_PUPD_NONE | GPIO_MODE_ANALOG | GPIO_ANALOG_SWITCH));
 
-    input = stm32l4_adc_convert(&stm32l4_adc, g_APinDescription[pin].adc_input);
+    const uint32_t input = stm32l4_adc_convert(&stm32l4_adc, g_APinDescription[pin].adc_input);
 
     stm32l4_adc_disable(&stm32l4_adc);
 
@@ -222,8 +218,6 @@ void analogWriteRange(uint32_t pin, uint32_t range)
 // to digital output.
 void analogWrite(uint32_t pin, uint32_t value)
 {
-    uint32_t instance, channel, carrier, modulus, divider;
-
     // Handle the case the pin isn't usable as PIO
     if (g_APinDescription[pin].GPIO == NULL)
     {
@@ -243,7 +237,7 @@ void analogWrite(uint32_t pin, uint32_t value)
     
 	value = mapResolution(value, _writeResolution, 12);
 
-	channel = ((pin == PIN_DAC0) ? DAC_CHANNEL_1 : DAC_CHANNEL_2);
+	const uint32_t channel = ((pin == PIN_DAC0) ? DAC_CHANNEL_1 : DAC_CHANNEL_2);
 
 	if (_writeCalibrate & (1ul << channel))
 	{
@@ -262,12 +256,12 @@ void analogWrite(uint32_t pin, uint32_t value)
 
     if (g_APinDescription[pin].attr & PIN_ATTR_PWM)
     {
-	instance = g_APinDescription[pin].pwm_instance;
+	const uint32_t instance = g_APinDescription[pin].pwm_instance;
 
 	if (stm32l4_pwm[instance].state == TIMER_STATE_NONE)
 	{
 	    stm32l4_timer_create(&stm32l4_pwm[instance], g_PWMInstances[instance], STM32L4_PWM_IRQ_PRIORITY, 0);
-
+	    uint32_t carrier, modulus;
 	    if (_writeFrequency[instance] && _writeRange[instance])
 	    {
 		carrier = _writeFrequency[instance] * _writeRange[instance];
@@ -279,7 +273,7 @@ void analogWrite(uint32_t pin, uint32_t value)
 		modulus = 4095;
 	    }
 
-	    divider = stm32l4_timer_clock(&stm32l4_pwm[instance]) / carrier;
+	    uint32_t divider = stm32l4_timer_clock(&stm32l4_pwm[instance]) / carrier;
 
 	    if (divider == 0)
 	    {
