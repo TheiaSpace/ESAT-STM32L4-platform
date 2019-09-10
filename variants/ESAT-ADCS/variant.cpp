@@ -132,3 +132,9 @@ extern const unsigned int g_Wire1Mode = 0;
 extern const stm32l4_spi_pins_t g_SPIPins = { GPIO_PIN_PB15_SPI2_MOSI, GPIO_PIN_PB14_SPI2_MISO, GPIO_PIN_PB13_SPI2_SCK, GPIO_PIN_NONE };
 extern const unsigned int g_SPIInstance = SPI_INSTANCE_SPI2;
 extern const unsigned int g_SPIMode = SPI_MODE_RX_DMA | SPI_MODE_TX_DMA;
+
+// Disable JTAG on MTQX- control line and set it to high impedance during startup.
+void initVariant()
+{
+  pinMode(MTQXMINUS, INPUT);
+}
