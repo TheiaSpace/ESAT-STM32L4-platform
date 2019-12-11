@@ -13,7 +13,7 @@ ESAT ADCS.
 
 ## Copyright and license
 
-Copyright (C) 2018 Theia Space, Universidad Politécnica de Madrid.
+Copyright (C) 2018, 2019 Theia Space, Universidad Politécnica de Madrid.
 
 This file is part of Theia Space's ESAT core for Arduino for
 STM32L4-based ESAT boards (Theia Space's ESAT Boards (STM32L4)), which
