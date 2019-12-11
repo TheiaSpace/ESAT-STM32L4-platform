@@ -2,6 +2,7 @@
   EEPROM.h - EEPROM library
   Original Copyright (c) 2006 David A. Mellis.  All right reserved.
   New version by Christopher Andrews 2015.
+  Last update by Theia Space, Universidad Politécnica de Madrid, 2019.
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
@@ -40,7 +41,7 @@ struct EERef{
     
     //Access/read members.
     uint8_t operator*() const            { return eeprom_read_byte( (uint8_t*) index ); }
-    operator const uint8_t() const       { return **this; }
+    operator uint8_t() const       { return **this; }
     
     //Assignment/write members.
     EERef &operator=( const EERef &ref ) { return *this = *ref; }
@@ -89,7 +90,7 @@ struct EEPtr{
     EEPtr( const int index )
         : index( index )                {}
         
-    operator const int() const          { return index; }
+    operator int() const          { return index; }
     EEPtr &operator=( int in )          { return index = in, *this; }
     
     //Iterator functionality.
